@@ -1,1 +1,39 @@
-{     "devDependencies": {         "generic-pool": "*",         "electron-lite": "kaizhu256/node-electron-lite#alpha",         "utility2": "kaizhu256/node-utility2#alpha"     },     "name":"npmdoc-generic-pool",     "homepage": "https://github.com/npmdoc/node-npmdoc-generic-pool",     "repository": {         "type": "git",         "url": "https://github.com/npmdoc/node-npmdoc-generic-pool.git"     },     "scripts": {         "build-ci": "utility2 shReadmeTest build_ci.sh"     },     "version": "0.0.1" }
+{
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "description": "#### api documentation for  [generic-pool (v3.1.7)](https://github.com/coopernurse/node-pool#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-generic-pool.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-generic-pool) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-generic-pool.svg)](https://travis-ci.org/npmdoc/node-npmdoc-generic-pool)",
+    "devDependencies": {
+        "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "generic-pool": "*",
+        "utility2": "kaizhu256/node-utility2#alpha"
+    },
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-generic-pool",
+    "keywords": [
+        "documentation",
+        "generic-pool"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_generic_pool.js",
+    "name": "npmdoc-generic-pool",
+    "nameAlias": "npmdoc_generic_pool",
+    "nameOriginal": "npmdoc-generic-pool",
+    "os": [
+        "darwin",
+        "linux"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/npmdoc/node-npmdoc-generic-pool.git"
+    },
+    "scripts": {
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "npm install \"kaizhu256/node-utility2#alpha\" && utility2 shDeployHeroku",
+        "postinstall": "[ ! -f npm_scripts.sh ] || ./npm_scripts.sh postinstall",
+        "start": "PORT=${PORT:-8080} utility2 start test.js",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
+    },
+    "version": "0.0.1"
+}

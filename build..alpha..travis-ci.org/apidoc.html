@@ -1,0 +1,607 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/coopernurse/node-pool#readme"
+
+    >generic-pool (v3.1.7)</a>
+</h1>
+<h4>Generic resource pooling for Node.JS</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.generic-pool">module generic-pool</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.generic-pool.DefaultEvictor">
+            function <span class="apidocSignatureSpan">generic-pool.</span>DefaultEvictor
+            <span class="apidocSignatureSpan">(config, pooledResource, availableObjectsCount)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.generic-pool.Deque">
+            function <span class="apidocSignatureSpan">generic-pool.</span>Deque
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.generic-pool.Pool">
+            function <span class="apidocSignatureSpan">generic-pool.</span>Pool
+            <span class="apidocSignatureSpan">(Evictor, Deque, PriorityQueue, factory, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.generic-pool.PriorityQueue">
+            function <span class="apidocSignatureSpan">generic-pool.</span>PriorityQueue
+            <span class="apidocSignatureSpan">(size)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.generic-pool.createPool">
+            function <span class="apidocSignatureSpan">generic-pool.</span>createPool
+            <span class="apidocSignatureSpan">(factory, config)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">generic-pool.</span>errors</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">generic-pool.</span>utils</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.generic-pool.errors">module generic-pool.errors</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.generic-pool.errors.TimeoutError">
+            function <span class="apidocSignatureSpan">generic-pool.errors.</span>TimeoutError
+            <span class="apidocSignatureSpan">(m)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.generic-pool.utils">module generic-pool.utils</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.generic-pool.utils.reflector">
+            function <span class="apidocSignatureSpan">generic-pool.utils.</span>reflector
+            <span class="apidocSignatureSpan">(promise)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.generic-pool" id="apidoc.module.generic-pool">module generic-pool</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.generic-pool.DefaultEvictor" id="apidoc.element.generic-pool.DefaultEvictor">
+        function <span class="apidocSignatureSpan">generic-pool.</span>DefaultEvictor
+        <span class="apidocSignatureSpan">(config, pooledResource, availableObjectsCount)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">class DefaultEvictor {
+  evict (config, pooledResource, availableObjectsCount) {
+    const idleTime = Date.now() - pooledResource.lastIdleTime
+
+    if (config.softIdleTimeoutMillis &#x3c; idleTime &#x26;&#x26; config.min &#x3c; availableObjectsCount) {
+      return true
+    }
+
+    if (config.idleTimeoutMillis &#x3c; idleTime) {
+      return true
+    }
+
+    return false
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.generic-pool.Deque" id="apidoc.element.generic-pool.Deque">
+        function <span class="apidocSignatureSpan">generic-pool.</span>Deque
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">class Deque {
+  constructor () {
+    this._list = new DoublyLinkedList()
+  }
+
+<span class="apidocCodeCommentSpan">  /**
+   * removes and returns the first element from the queue
+   * @return {[type]} [description]
+   */
+</span>  shift () {
+    if (this._length === 0) {
+      return undefined
+    }
+
+    const node = this._list.head
+    this._list.remove(node)
+
+    return node.data
+  }
+
+  /**
+   * adds one elemts to the beginning of the queue
+   * @param  {[type]} element [description]
+   * @return {[type]}         [description]
+   */
+  unshift (element) {
+    const node = DoublyLinkedList.createNode(element)
+
+    this._list.insertBeginning(node)
+  }
+
+  /**
+   * adds one to the end of the queue
+   * @param  {[type]} element [description]
+   * @return {[type]}         [description]
+   */
+  push (element) {
+    const node = DoublyLinkedList.createNode(element)
+
+    this._list.insertEnd(node)
+  }
+
+  /**
+   * removes and returns the last element from the queue
+   */
+  pop () {
+    if (this._length === 0) {
+      return undefined
+    }
+
+    const node = this._list.tail
+    this._list.remove(node)
+
+    return node.data
+  }
+
+  [Symbol.iterator] () {
+    return new DequeIterator(this._list)
+  }
+
+  iterator () {
+    return new DequeIterator(this._list)
+  }
+
+  reverseIterator () {
+    return new DequeIterator(this._list, true)
+  }
+
+  /**
+   * get a reference to the item at the head of the queue
+   * @return {element} [description]
+   */
+  get head () {
+    if (this._list.length === 0) {
+      return undefined
+    }
+    const node = this._list.head
+    return node.data
+  }
+
+  /**
+   * get a reference to the item at the tail of the queue
+   * @return {element} [description]
+   */
+  get tail () {
+    if (this._list.length === 0) {
+      return undefined
+    }
+    const node = this._list.tail
+    return node.data
+  }
+
+  get length () {
+    return this._list.length
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.generic-pool.Pool" id="apidoc.element.generic-pool.Pool">
+        function <span class="apidocSignatureSpan">generic-pool.</span>Pool
+        <span class="apidocSignatureSpan">(Evictor, Deque, PriorityQueue, factory, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">class Pool extends EventEmitter {
+
+<span class="apidocCodeCommentSpan">  /**
+   * Generate an Object pool with a specified `factory` and `config`.
+   *
+   * @param {Object} factory
+   *   Factory to be used for generating and destroying the items.
+   * @param {Function} factory.create
+   *   Should create the item to be acquired,
+   *   and call it&#x27;s first callback argument with the generated item as it&#x27;s argument.
+   * @param {Function} factory.destroy
+   *   Should gently close any resources that the item is using.
+   *   Called before the items is destroyed.
+   * @param {Function} factory.validate
+   *   Test if a resource is still valid .Should return a promise that resolves to a boolean, true if resource is still valid and
+ false
+   *   If it should be removed from pool.
+   */
+</span>  constructor (Evictor, Deque, PriorityQueue, factory, options) {
+    super()
+
+    factoryValidator(factory)
+
+    this._config = new PoolOptions(options)
+
+    // TODO: fix up this ugly glue-ing
+    this._Promise = this._config.Promise
+
+    this._factory = factory
+    this._draining = false
+    this._started = false
+    /**
+     * Holds waiting clients
+     * @type {PriorityQueue}
+     */
+    this._waitingClientsQueue = new PriorityQueue(this._config.priorityRange)
+
+    /**
+     * Collection of promises for resource creation calls made by the pool to factory.create
+     * @type {Set}
+     */
+    this._factoryCreateOperations = new Set()
+
+    /**
+     * Collection of promises for resource destruction calls made by the pool to factory.destroy
+     * @type {Set}
+     */
+    this._factoryDestroyOperations = new Set()
+
+    /**
+     * A queue/stack of pooledResources awaiting acquisition
+     * TODO: replace with LinkedList backed array
+     * @type {Array}
+     */
+    this._availableObjects = new Deque()
+
+    /**
+     * Collection of references for any resource that are undergoing validation before being acquired
+     * @type {Set}
+     */
+    this._testOnBorrowResources = new Set()
+
+    /**
+     * Collection of references for any resource that are undergoing validation before being returned
+     * @type {Set}
+     */
+    this._testOnReturnResources = new Set()
+
+    /**
+     * Collection of promises for any validations currently in process
+     * @type {Set}
+     */
+    this._validationOperations = new Set()
+
+    /**
+     * All objects associated with this pool in any state (except destroyed)
+     * @type {PooledResourceCollection}
+     */
+    this._allObjects = new Set()
+
+    /**
+     * Loans keyed by the borrowed resource
+     * @type {Map}
+     */
+    this._resourceLoans = new Map()
+
+    /**
+     * Infinitely looping iterator over available object
+     * @type {DLLArrayIterator}
+     */
+    this._evictionIterator = this._availableObjects.iterator()
+
+    this._evictor = new Evictor()
+
+    /**
+     * handle for setTimeout for next eviction run
+     * @type {[type]}
+     */
+    this._scheduledEviction = null
+
+    // create initial resources (if factory.min &#x3e; 0)
+    if (this._config.autostart === true) {
+      this.start()
+    }
+  }
+
+  _destroy (pooledResource) {
+    // FIXME: do we need another state for &#x22;in destruction&#x22;?
+    pooledResource.invalidate()
+    this._allObjects.delete(pooledResource)
+    // NOTE: this maybe very bad promise usage?
+    const destroyPromise = this._factory.destroy(pooledResource.obj)
+    const wrappedDestroyPromise = this._Promise.resolve(destroyPromise)
+
+    this._trackOperation(wrappedDestroyPromise, this._factoryDestroyOperations)
+    .catch((reason) =&#x3e; {
+      this.emit(FACTORY_DESTROY_ERROR, reason)
+    })
+
+    // TODO: maybe ensuring minimum pool size should live outside here
+    this._ensureMinimum()
+  }
+
+  /**
+   * Attempt to move an available resource into test and then onto a waiting client
+   * @return {Boolean} could we move an available resource into test
+   */
+  _testOnBorrow () {
+    if (this._availableObjects.length &#x3c; 1) {
+      return false
+    }
+
+    const pooledResource = this._availableObjects.shift()
+    // Mark the resource as in test
+    pooledResource.test()
+    this._testOnBorrowResources.add(pooledResource)
+    const validationProm ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.generic-pool.PriorityQueue" id="apidoc.element.generic-pool.PriorityQueue">
+        function <span class="apidocSignatureSpan">generic-pool.</span>PriorityQueue
+        <span class="apidocSignatureSpan">(size)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">class PriorityQueue {
+  constructor (size) {
+    this._size = Math.max(+size | 0, 1)
+    this._slots = []
+    // initialize arrays to hold queue elements
+    for (let i = 0; i &#x3c; this._size; i++) {
+      this._slots.push(new Queue())
+    }
+  }
+
+  get length () {
+    let _length = 0
+    for (let i = 0, slots = this._slots.length; i &#x3c; slots; i++) {
+      _length += this._slots[i].length
+    }
+    return _length
+  }
+
+  enqueue (obj, priority) {
+    // Convert to integer with a default value of 0.
+    priority = priority &#x26;&#x26; +priority | 0 || 0
+
+    if (priority) {
+      if (priority &#x3c; 0 || priority &#x3e;= this._size) {
+        priority = (this._size - 1)
+        // put obj at the end of the line
+      }
+    }
+    this._slots[priority].push(obj)
+  }
+
+  dequeue () {
+    for (let i = 0, sl = this._slots.length; i &#x3c; sl; i += 1) {
+      if (this._slots[i].length) {
+        return this._slots[i].shift()
+      }
+    }
+    return
+  }
+
+  get head () {
+    for (let i = 0, sl = this._slots.length; i &#x3c; sl; i += 1) {
+      if (this._slots[i].length &#x3e; 0) {
+        return this._slots[i].head
+      }
+    }
+    return
+  }
+
+  get tail () {
+    for (let i = this._slots.length - 1; i &#x3e;= 0; i--) {
+      if (this._slots[i].length &#x3e; 0) {
+        return this._slots[i].tail
+      }
+    }
+    return
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.generic-pool.createPool" id="apidoc.element.generic-pool.createPool">
+        function <span class="apidocSignatureSpan">generic-pool.</span>createPool
+        <span class="apidocSignatureSpan">(factory, config)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">createPool = function (factory, config){
+  return new Pool(DefaultEvictor, Deque, PriorityQueue, factory, config)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+}
+
+var opts = {
+    max: 10, // maximum size of the pool
+    min: 2 // minimum size of the pool
+}
+
+var myPool = genericPool.<span class="apidocCodeKeywordSpan">createPool</span>(factory, opts)
+
+/**
+ * Step 2 - Use pool in your code to acquire/release resources
+ */
+
+// acquire connection - Promise is resolved
+// once a resource becomes available
+...</pre></li>
+    </ul>
+
+
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.generic-pool.errors" id="apidoc.module.generic-pool.errors">module generic-pool.errors</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.generic-pool.errors.TimeoutError" id="apidoc.element.generic-pool.errors.TimeoutError">
+        function <span class="apidocSignatureSpan">generic-pool.errors.</span>TimeoutError
+        <span class="apidocSignatureSpan">(m)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">class TimeoutError extends ExtendableError {
+  constructor (m) {
+    super(m)
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+removeTimeout () {
+  clearTimeout(this._timeout)
+  this._timeout = null
+}
+
+_fireTimeout () {
+  this.reject(new errors.<span class="apidocCodeKeywordSpan">TimeoutError</span>(&#x27;ResourceRequest timed out&#x27;))
+}
+
+reject (reason) {
+  this.removeTimeout()
+  super.reject(reason)
+}
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.generic-pool.utils" id="apidoc.module.generic-pool.utils">module generic-pool.utils</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.generic-pool.utils.reflector" id="apidoc.element.generic-pool.utils.reflector">
+        function <span class="apidocSignatureSpan">generic-pool.utils.</span>reflector
+        <span class="apidocSignatureSpan">(promise)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">reflector = function (promise) {
+  return promise.then(noop, noop)
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
